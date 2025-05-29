@@ -14,7 +14,7 @@ body {
     background-color: black;
     position: sticky;
     top: 0px;
-    z-index: 13;
+    z-index: 30;
 }
 
 /* header가 스크롤 됐을때의 css */
