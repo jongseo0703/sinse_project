@@ -133,7 +133,7 @@ html, body {
     opacity: 1;
 }
 .section-wrapper.hover-center .overlay-second {
-    background-image: url('../images/문화사진.png');
+    background-image: url('../images/culture.png');
     opacity: 1;
 }
 .section-wrapper.hover-right .overlay-second {
