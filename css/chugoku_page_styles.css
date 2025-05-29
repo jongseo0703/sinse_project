@@ -1,0 +1,462 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+#wrapper {
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+#header {
+    width: 100%;
+    height: 100px;
+    background-color: black;
+    position: sticky;
+    top: 0px;
+    z-index: 50;
+}
+
+/* header가 스크롤 됐을때의 css */
+#header.scrolled {
+    background-color: rgba(0, 0, 0, 0.6); /* 투명 */
+    backdrop-filter: blur(5px); /* 블러효과 */
+}
+
+#header img {
+    width: 100px;
+    height: 100px;
+    text-align: left;
+    float: left;
+}
+
+#menu h2 {
+    color: white;
+    float: right;
+    font-size: 18px;
+    padding-top: 25px;
+    padding-right: 20px;
+}
+/*----------------------타이틀 컨테이너 영역----------------------------*/
+#title-container {
+    width: 100%;
+    height: 900px;
+    position: relative;
+    
+    background-image: url("../images/히로시마성.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#title-container h2 {
+    color: white;
+    font-size: 120px;
+}
+
+/* 꾸밈 효과인 선을 만들기 위해 가상 요소 선택자를 사용함 */
+#wrapper::before {
+    content: "";
+    position: absolute;
+    top: 100px;
+    width: 1.5px;
+    height: 353.8%;
+    background-color: #969696;
+    left: 21.9%;
+    z-index: 10;
+}
+
+/* 꾸밈 효과인 선을 만들기 위해 가상 요소 선택자를 사용함 */
+#title-container::before,
+#title-container::after {
+    content: "";
+    position: absolute;
+    width: 1.5px;
+    height: 100%;
+    background-color: white;
+    z-index: 2;
+}
+
+/* 꾸밈 효과인 선을 만들기 위해 가상 요소 선택자를 사용함 */
+#title-container::before {
+    left: 30%; /* 첫 번째 세로선 위치 */
+}
+
+/* 꾸밈 효과인 선을 만들기 위해 가상 요소 선택자를 사용함 */
+#title-container::after {
+    left: 70%; /* 두 번째 세로선 위치 */
+}
+
+/* 오버레이 효과로 배경위에 옅은 검정색 효과를 줌 */
+#title-container .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+}
+
+/* 배경만 오버레이 효과를 처리하기 위해 */
+#title-container > *:not(.overlay) {
+    z-index: 2;
+}
+
+/*----------------------중간 컨테이너 영역----------------------------*/
+#middle-container {
+    width: 100%;
+    height: 500px;
+    background-color: #ECE8E1;
+    position: relative;
+    text-align: center;
+}
+
+/* 3개의 원 영역 */
+#select-section {
+    position: absolute;
+    top: 150px;
+    left: 500px;
+    display: flex;
+    flex-direction: row;
+    gap: 120px;
+    z-index: 20;
+}
+
+/* 원 효과의 이미지 */
+#select-section img {
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+}
+
+/* 이미지위에 오버레이 효과를 주기위해 똑같은 크기의 wrapper를 만듦 */
+.image-wrapper {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  overflow: hidden; /* 이미지 밖으로 오버레이 튀어나오지 않게 */
+}
+
+.image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* image-wrapper에 가상선택자로 오버레이 효과를 부여함 */
+.image-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.image-wrapper h3 {
+    /* 밑에 4줄 코드는 부모를 기준으로 중앙으로 정렬할 수 있는 코드임 */
+    position: absolute;
+    top: 50%; /* 세로 가운데 */
+    left: 50%; /* 가로 가운데 */
+    transform: translate(-50%, -50%); /* 완전 중앙 정렬 */
+
+    margin: 0;
+    padding: 0 10px;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    z-index: 2; /* 오버레이보다 위에 오기 위해 */
+    text-align: center;
+    white-space: nowrap; /* 텍스트가 줄 바꿈되지 않도록 */
+}
+
+/* 3개의 삼각형 영역 */
+#triangle-section {
+    position: absolute;
+    top: 420px;
+    left: 590px;
+    display: flex;
+    flex-direction: row;
+    gap: 300px;
+    z-index: 20;
+}
+
+.triangle {
+    /* width와 height가 0이면 border들이 서로 만나면서 삼각형처럼 보이는 효과 */
+    width: 0;
+    height: 0;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-top: 20px solid #FF547F;
+    visibility: hidden; /* 보여짐을 숨김 */
+}
+
+/* visible클래스를 부여받았다면 보여지게 함 */
+.triangle.visible {
+    visibility: visible;
+}
+
+/* 테두리만 있는 글씨 효과 */
+#middle-container .site-logo {
+    margin: 0;
+    padding-top: 100px;
+    position: relative;
+    font-size: 270px;
+    color: transparent; /* 투명하게 */
+    -webkit-text-stroke: 3px rgb(186, 186, 186);
+    z-index: 15;
+}
+
+#middle-container .tree {
+    width: 450px;
+    height: 450px;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    z-index: 10;
+}
+
+#middle-container .mountain {
+    width: 450px;
+    height: 450px;
+    position: absolute;
+    right: 0;
+    bottom: -200px;
+}
+
+/*----------------------컨텐츠 컨테이너의 헤더 영역----------------------*/
+#content-header {
+    width: 100%;
+    height: 150px;
+    background-color: #EDAEBE;
+    position: relative;
+    text-align: center;
+}
+
+#content-header h1 {
+    margin: 0;
+    padding-top: 30px;
+    font-size: 50px;
+    color: white;
+}
+
+#content-header h2 {
+    margin-top: 5px;
+    font-size: 30px;
+    color: white;
+}
+
+#content-header .crab {
+    position: absolute;
+    top: 30px;
+    right: 550px;
+    width: 150px;
+    height: 100px;
+}
+
+#content-header .snowman {
+    position: absolute;
+    left: 600px;
+    bottom: 0;
+    width: 100px;
+    height: 100px;
+}
+
+/*----------------------컨텐츠 컨테이너 영역----------------------------*/
+#content-container {
+    width: 100%;
+    height: 2000px;
+    background-color: #ECE8E1;
+}
+
+/* 볼거리 영역 */
+#see-container {
+    position: relative;
+    width: 100%;
+    height: 1300px;
+}
+
+/* 테두리만 있는 글씨 효과 */
+#see-container .site-logo:nth-child(1) {
+    margin: 0;
+    padding-top: 100px;
+    position: absolute;
+    right: 0;
+    top: 600px;
+    font-size: 270px;
+    color: transparent; /* 투명하게 */
+    -webkit-text-stroke: 3px rgb(186, 186, 186);
+}
+
+#see-first {
+    padding-top: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    position: relative;
+    z-index: 15;
+}
+
+#see-container img {
+    width: 550px;
+    height: 370px;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+#text-area {
+    text-align: right;
+    margin-right: 30px;
+}
+
+#text-area h3 {
+    font-size: 25px;
+    padding-top: 100px;
+}
+
+#text-area p {
+    font-size: 15px;
+    width: 350px; /* 너비 설정 */
+    word-wrap: break-word; /* 단어가 넘치면 줄바꿈 */
+}
+
+/* 순서가 바뀐 텍스트 영역 */
+#text-area-reverse {
+    text-align: left;
+    margin-left: 30px;
+}
+
+#text-area-reverse h3 {
+    font-size: 25px;
+    padding-top: 100px;
+}
+
+#text-area-reverse p {
+    font-size: 15px;
+    width: 350px; /* 너비 설정 */
+    word-wrap: break-word; /* 단어가 넘치면 줄바꿈 */
+}
+
+/* 먹거리 영역 */
+#food-container {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    padding: 20px;
+}
+
+/* 테두리만 있는 글씨 효과 */
+#food-container .site-logo:nth-child(1) {
+    margin: 0;
+    padding-top: 100px;
+    position: absolute;
+    left: 200px;
+    top: 0px;
+    font-size: 270px;
+    color: transparent; /* 투명하게 */
+    -webkit-text-stroke: 3px rgb(186, 186, 186);
+}
+
+/* 캐러셀(슬라이드 이미지) */
+.carousel {
+    position: relative;
+    display: flex;
+    gap: 50px;
+    scroll-behavior: smooth; /* 스크롤할때 부드러운 효과 애니메이션 */
+    overflow-x: auto; /* 가로방향으로 컨텐츠가 넘어가면 스크롤바를 자동으로 보여줌 */
+    padding-top: 200px;
+    padding-left: 310px;
+    z-index: 30;
+
+    scroll-snap-type: x mandatory; /* 스크롤할때 특정 위치에 딱 맞춰 멈추게함 */
+    -webkit-overflow-scrolling: touch; /* 터치 스크린 기반 */
+}
+
+/* 클래스 carousel의 스크롤바를 안보이게 감춤 */
+.carousel::-webkit-scrollbar {
+    display: none;
+}
+
+.food-card {
+    position: relative;
+    width: 480px;
+    height: 320px;
+    flex: 0 0 auto;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+
+    scroll-snap-align: center; /* 스크롤 스냅이 동작할 때, 해당 요소가 스크롤 컨테이너의 중앙에 정렬 */
+}
+
+.food-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* 카드 호버 효과 */
+.food-card .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    opacity: 0;
+    transition: 0.3s;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.food-card:hover .overlay {
+    opacity: 1;
+}
+
+.food-card .overlay h3 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.food-card .overlay p {
+    margin-top: 20px;
+    padding-left: 50px;
+    padding-right: 50px;
+    font-size: 14px;
+}
+
+/*-----------------------------푸터 영역-------------------------------*/
+#footer {
+    width: 100%;
+    height: 100px;
+    background-color: #ECE8E1;
+}
+
+#footer #text_area {
+    display: flex; /* 가로 배치 */
+    justify-content: center; /* 좌우 중앙 정렬 */
+}
+
+#footer h3 {
+    font-size: 15px;
+    color: #969696;
+}
+
+#footer hr {
+    height: 2px;
+    width: 80%;
+    background-color: #969696;
+    border: none;
+    margin: 0 auto;
+}

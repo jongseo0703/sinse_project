@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/intro_page_styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="wrapper">
+        <div class="container">
+            <div class="overlay-first"></div>
+            <img src="./images/logo.png" alt="">
+            <h2>私たちのサイトを訪問していただきありがとうございます</h2>
+            <h2>저희 사이트를 방문해주셔서 감사합니다.</h2>
+            <button>둘러보기</button>
+            <img src="./images/arrow.png" alt="" class="arrow-animate">
+        </div>
+        <div class="container">
+            <div class="overlay-first"></div>
+            <h2 id="title">1. 저희 사이트는 일본 문화 등 다양한 정보를 체험해볼 수 있습니다.</h2>
+            <div class="section-wrapper">
+                <div class="overlay-second"></div>
+                <div id="left_section">
+                    <h2 class="title">일본 음식</h2>
+                    <p class="description">일본의 음식에 대해서 알아볼 수 있습니다.</p>
+                </div>
+                <div id="center_section">
+                    <h2 class="title">문화</h2>
+                    <p class="description">일본의 문화에 대해서 알아볼 수 있습니다.</p>
+                </div>
+                <div id="right_section">
+                    <h2 class="title">일본 여행 꿀팁</h2>
+                    <p class="description">일본의 여행 꿀팁에 대해서 알아볼 수 있습니다.</p>
+                </div>
+            </div>
+            <img src="./images/arrow.png" alt="" class="arrow-animate">
+        </div>
+        <div class="container" id="exchange-container">
+            <div class="overlay-first"></div>
+            <h2 id="title">2. 오늘의 환율을 알아 볼 수 있습니다.</h2>
+            <div id="text_area">
+                <h3>1엔 = </h3>
+                <h3>오늘의 환율</h3>
+            </div>
+            <textarea name="" id="putJmoney" placeholder="원하시는 엔화를 입력해주세요"></textarea>
+            <button>조회</button>
+            <img src="./images/arrow.png" alt="" class="arrow-animate">
+        </div>
+        <div class="container" id="last-container">
+            <div class="overlay-first"></div>
+            <h2 id="title">3. 오늘의 일본 추천 관광명소입니다.</h2>
+            <div id="section">
+                <img>
+                <h2 id="randomH2"></h2>
+                <div id="weather"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script src="./lib/common.js"></script>
+<script>
+    
+    let wrapper = document.getElementById('wrapper');
+    let containers = document.getElementsByClassName('container');
+
+    //원스크롤 페이지를 관리하기 위한 변수
+    let page = 0;
+    let lastPage = containers.length - 1;
+
+    //두번째 컨테이너의 섹션부분 변수
+    let section_wrapper = document.querySelector(".section-wrapper");
+    let leftSection = document.getElementById('left_section');
+    let centerSection = document.getElementById('center_section');
+    let rightSection = document.getElementById('right_section');
+
+    let API_KEY = '810bef46baf9e4c0312410065bcba04f';
+
+    let isScrolling = false;
+
+    //일본의 지방 이름을 담고 있는 배열
+    let imgNameArray = [
+    '간토', '규슈', '훗카이도', '간사이', '츄뷰', '주고쿠', '시고쿠', '도호쿠', '오키나와'
+    ];
+
+    //일본의 지방 별 대표 지역(키로 값을 얻어올 수 있음)
+    let regionToCity = {
+        '간토': 'Tokyo',
+        '규슈': 'Fukuoka',
+        '훗카이도': 'Sapporo',
+        '간사이': 'Osaka',
+        '츄뷰': 'Nagoya',
+        '주고쿠': 'Hiroshima',
+        '시고쿠': 'Matsuyama',
+        '도호쿠': 'Sendai',
+        '오키나와': 'Naha'
+    };
+
+    //마우스휠 이벤트
+    addEventListener('wheel', (event) => {
+        if (isScrolling) return; //스크롤 중이면 무시
+
+        isScrolling = true;
+
+        if(event.deltaY > 0){
+            //아래로 스크롤하면
+            page++;
+        }
+        if(event.deltaY < 0){
+            //위로 스크롤하면
+            page--;
+        }
+        if(page < 0){
+            //잘못된 페이지 접근 방지
+            page = 0;
+        }
+        if(page > lastPage){
+            //잘못된 페이지 접근 방지
+            page = lastPage;
+        }
+
+        wrapper.style.top = page * -100 + 'vh';
+        //아이디가 wrapper에 있는 css top 속성값을 변경시키는 코드
+        //현재 보여지는 페이지에 따라서 +- 100vh 를 이동시킨다.
+
+        //800ms 후에 다시 스크롤 가능
+        //트랙패드 스크롤이 예민한 맥북을 위해
+        setTimeout(() => {
+            isScrolling = false;
+        }, 800);
+    }, {passive: false}); //passive 디폴트 기능 제거 - 스크롤
+
+    //마우스호버 이벤트를 leftSection에 부여
+    leftSection.addEventListener('mouseenter', () => {
+        //왼쪽에 마우스를 올리면 중간이랑 오른쪽 클래스 제거
+        section_wrapper.classList.add('hover-left');
+        section_wrapper.classList.remove('hover-center', 'hover-right');
+        leftSection.classList.add('hovered');
+    });
+
+    centerSection.addEventListener('mouseenter', () => {
+        //중간에 마우스를 올리면 왼쪽이랑 오른쪽 클래스 제거
+        section_wrapper.classList.add('hover-center');
+        section_wrapper.classList.remove('hover-left', 'hover-right');
+        centerSection.classList.add('hovered');
+    });
+
+    rightSection.addEventListener('mouseenter', () => {
+        //오른쪽에 마우스를 올리면 왼쪽이랑 중간 클래스 제거
+        section_wrapper.classList.add('hover-right');
+        section_wrapper.classList.remove('hover-center', 'hover-left');
+        rightSection.classList.add('hovered');
+    });
+
+    //마우스가 컨테이너를 벗어나면 클래스 제거
+    section_wrapper.addEventListener('mouseleave', () => {
+        section_wrapper.classList.remove('hover-left', 'hover-center', 'hover-right');
+        centerSection.classList.remove('hovered');
+        rightSection.classList.remove('hovered');
+        leftSection.classList.remove('hovered');
+    });
+
+    //엔화 환율 계산 API를 이용한 그날 그날의 엔화 환율 계산을 해주는 함수
+    async function fetchExchangeRate() {
+        fetch('http://localhost:3000/exchange-rate') //백엔드 서버의 3000번 포트 환율 포트랑 연결
+        .then(res => res.json())
+        .then(data => {
+            let inputJmoney;
+            const jpy = data.find(item => item.cur_unit === 'JPY(100)');
+            const ratePerYen = parseFloat(jpy.deal_bas_r) / 100;
+            //console.log(`1엔 = ${ratePerYen.toFixed(2)} 원`);
+            document.querySelector("#exchange-container h3:nth-child(2)").innerText = `${ratePerYen}원`;
+            let jtext = document.getElementById("putJmoney");
+            jtext.addEventListener("keydown", (e) => {
+                if(e.keyCode == 13) {
+                    //엔터쳤을 때도 가능하게 함.
+                    e.preventDefault(); //줄바꿈 방지
+                    inputJmoney = parseInt(jtext.value);
+                    document.querySelector("#text_area h3:nth-child(1)").innerText = `${inputJmoney}엔 = `;
+                    document.querySelector("#text_area h3:nth-child(2)").innerText = `${inputJmoney * ratePerYen}원`;
+                    jtext.value="";
+                }
+            });
+            document.querySelector("#exchange-container button").addEventListener("click", () => {
+                //버튼 클릭으로도 가능하게 함.
+                inputJmoney = parseInt(jtext.value);
+                document.querySelector("#text_area h3:nth-child(1)").innerText = `${inputJmoney}엔 = `;
+                document.querySelector("#text_area h3:nth-child(2)").innerText = `${inputJmoney * ratePerYen}원`;
+                jtext.value="";
+            })
+        })
+        .catch(err => {
+            console.error('환율 정보 요청 실패:', err);
+        });
+
+    }
+
+    //네번째 컨테이너에 이미지를 랜덤으로 생성해주기 위한 함수
+    function createRandomImg() {
+        let last_container = document.getElementById("last-container");
+        let img = document.querySelector("#last-container img");
+        let h2 = document.querySelector("#last-container #section h2");
+        let randomIndex = 1 + getRandom(8);
+        img.src = `./images/randomImage/img${randomIndex}.png`;
+        img.style.width = 800 + "px";
+        img.style.height = 500 + "px";
+        h2.innerText = imgNameArray[randomIndex - 1];
+
+        //랜덤인 지역명을 regionName에 넣음
+        let regionName = imgNameArray[randomIndex - 1];
+        //그 지역명을 키로 사용해서 값을 조회해서 city에 저장
+        let city = regionToCity[regionName];
+        getWeather(city);
+    }
+
+    //OpenWeaterMap API를 이용한 날씨 가져오기
+    async function getWeather(cityName) {
+        const res = await fetch(
+            `https://api.openweathermap.org/data/2.5/weather?q=${cityName},jp&units=metric&lang=kr&appid=${API_KEY}`
+        );
+        const data = await res.json();
+        document.getElementById("weather").innerHTML = `
+            <img src="https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png" />
+            <span style="font-size: 20px; color: white; margin-left: 8px;">
+                ${data.weather[0].description}, ${data.main.temp}°C
+            </span>`;
+    }
+
+    addEventListener("load", () => {
+        createRandomImg();
+        fetchExchangeRate();
+
+        //메인페이지 이동 버튼
+        document.querySelector(".container button").addEventListener("click", () => {
+            location.href = 'main.html';
+        });
+
+    });
+</script>

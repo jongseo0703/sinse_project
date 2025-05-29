@@ -1,0 +1,385 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+#wrapper {
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+#header {
+    width: 100%;
+    height: 100px;
+    background-color: black;
+    position: sticky;
+    top: 0px;
+    z-index: 13;
+}
+
+/* header가 스크롤 됐을때의 css */
+#header.scrolled {
+    background-color: rgba(0, 0, 0, 0.6); /* 투명 */
+    backdrop-filter: blur(5px); /* 블러효과 */
+}
+
+#header img {
+    width: 100px;
+    height: 100px;
+    text-align: left;
+    float: left;
+}
+
+#menu h2 {
+    color: white;
+    float: right;
+    font-size: 18px;
+    padding-top: 25px;
+    padding-right: 20px;
+}
+
+#title-container {
+    width: 100%;
+    height: 700px;
+    position: relative;
+    
+    background-image: url("../images/backgroundImg1.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 꾸밈 효과인 선을 만들기 위해 가상 요소 선택자를 사용함 */
+#wrapper::before {
+    content: "";
+    position: absolute;
+    top: 100px;
+    width: 1.5px;
+    height: 309%;
+    background-color: #969696;
+    left: 21.9%;
+    z-index: 10;
+}
+
+/* 꾸밈 효과인 선을 만들기 위해 가상 요소 선택자를 사용함 */
+#title-container::before,
+#title-container::after {
+    content: "";
+    position: absolute;
+    width: 1.5px;
+    height: 100%;
+    background-color: white;
+    z-index: 2;
+}
+
+/* 꾸밈 효과인 선을 만들기 위해 가상 요소 선택자를 사용함 */
+#title-container::before {
+    left: 30%; /* 첫 번째 세로선 위치 */
+}
+
+/* 꾸밈 효과인 선을 만들기 위해 가상 요소 선택자를 사용함 */
+#title-container::after {
+    left: 70%; /* 두 번째 세로선 위치 */
+}
+
+/* 오버레이 효과로 배경위에 옅은 검정색 효과를 줌 */
+#title-container .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+}
+
+/* 배경만 오버레이 효과를 처리하기 위해 */
+#title-container > *:not(.overlay) {
+    z-index: 2;
+}
+
+#title-container h2 {
+    font-size: 100px;
+    color: white;
+}
+
+/* 왼쪽 아래가 직각인 삼각형 만들기 */
+#rect {
+    border-left: 0 solid transparent;
+    border-top: 0 solid transparent;
+    border-right: 100px solid transparent;
+    border-bottom: 100px solid #ECE8E1;
+    position: absolute;
+    top: 600px;
+    left: 0px;
+}
+
+/* 일본 지역별 정보 컨테이너 영역 */
+#region-container {
+    width: 100%;
+    height: 700px;
+    background-color: #ECE8E1;
+    position: relative;
+    display: flex;
+    flex-direction: column; /* 수직 정렬 */
+    align-items: center; /* 가로 중앙 정렬 */
+}
+
+#region-container > * {
+    margin-top: 5px;
+}
+
+/* 테두리만 있는 글씨 효과 */
+#region-container .site-logo:nth-child(1) {
+    font-size: 250px;
+    color: transparent; /* 투명하게 */
+    -webkit-text-stroke: 3px rgb(186, 186, 186);
+    position: absolute;
+    top: 0px;
+    left: 300px;
+}
+
+#region-container .site-logo:nth-child(2) {
+    font-size: 250px;
+    color: transparent; /* 투명하게 */
+    -webkit-text-stroke: 3px rgb(186, 186, 186);
+    position: absolute;
+    top: 280px;
+    left: 300px;
+}
+
+#region-container h2 {
+    font-size: 100px;
+    color: #FF83A2;
+    padding-right: 350px;
+    z-index: 3;
+}
+
+#region-img {
+    margin-top: -80px;
+    padding-left: 250px;
+    display: flex;
+}
+
+.img-box {
+    width: 400px;
+    height: auto;
+    margin-right: 20px;
+    overflow: visible;
+    transition: 0.3s;
+    position: relative;
+    text-align: center;
+}
+
+.img-box img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    display: block;
+}
+
+.img-box h3 {
+    position: static;
+    margin-top: 10px;
+    font-size: 20px;
+    color: black;
+    z-index: 2;
+}
+
+/* 마우스를 올렸을 때 색이 차는 효과를 만들기위해 가상요소선택자를 사용함 */
+.img-box::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 250px;
+    background-color: #FF83A2;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 1;
+}
+
+.img-box:hover::after {
+    opacity: 0.5; /* 마우스 올리면 핑크색 반투명 오버레이가 생김 */
+}
+
+/* 왼쪽 아래가 직각인 삼각형 만들기 */
+#rect2 {
+    border-left: 0 solid transparent;
+    border-top: 0 solid transparent;
+    border-right: 410px solid transparent;
+    border-bottom: 100px solid #EDAEBE;
+    position: absolute;
+    top: 600px;
+    left: 0px;
+}
+
+#culture-container {
+    width: 100%;
+    height: 700px;
+    background-color: #EDAEBE;
+    position: relative;
+    display: flex; /* 가로 배치 */
+    justify-content: center; /* 좌우 중앙 정렬 */
+}
+
+#culture-container img {
+    position: relative;
+    top: 0px;
+    width: 600px;
+    height: 600px;
+    padding-top: 60px;
+}
+
+#text_area {
+    padding-left: 50px;
+    text-align: left;
+    padding-bottom: 100px;
+}
+
+#text_area h1 {
+    font-size: 100px;
+    color: white;
+}
+
+#text_area h3 {
+    font-size: 20px;
+    color: white;
+}
+
+#text_area p {
+    font-size: 20px;
+    color: white;
+}
+
+#right_section {
+    padding-top: 60px;
+    text-align: center;
+}
+
+#right_section button {
+    position: relative;
+    z-index: 20;
+    width: 250px;
+    height: 50px;
+    background-color: white;
+    border: none;
+    font-weight: bold;
+    outline: 2px solid white;
+    outline-offset: 10px; /* 버튼으로 부터 10px 떨어진 곳에 outline */
+}
+
+#tips-container {
+    width: 100%;
+    height: 1000px;
+    background-color: #ECE8E1;
+    position: relative;
+    display: flex; /* 가로 배치 */
+    justify-content: center; /* 좌우 중앙 정렬 */
+}
+
+#tips-container .site-logo {
+    font-size: 300px;
+    color: transparent; /* 투명하게 */
+    -webkit-text-stroke: 3px rgb(186, 186, 186);
+    position: absolute;
+    top: 0px;
+    left: 300px;
+    z-index: 8;
+}
+
+#left_section {
+    padding-top: 250px;
+    text-align: center;
+    z-index: 10;
+}
+
+#tips-container h1{
+    font-size: 100px;
+    color: black;
+}
+
+#tips-container h3{
+    font-size: 20px;
+    color: #606060;
+}
+
+#tips-container p{
+    font-size: 20px;
+    color: #606060;
+}
+
+#tips-container button {
+    width: 250px;
+    height: 50px;
+    background-color: #FF83A2;
+    color: white;
+    border: none;
+    font-weight: bold;
+    outline: 2px solid white;
+    outline-offset: 10px;
+}
+
+/* 옅은 블러 효과를 줌 */
+#blur {
+    position: absolute;
+    top: 0;
+    right: 0px;
+    width: 1000px;
+    height: 100%;
+    background: radial-gradient(
+        circle at left center,
+        rgba(236, 232, 225, 1) 0%,
+        rgba(236, 232, 225, 0.4) 70%,
+        rgba(236, 232, 225, 0) 100%
+    );
+    pointer-events: none;
+    z-index: 7;
+}
+
+#bird {
+    position: absolute;
+    top: 0px;
+    left: 1200px;
+    width: 400px;
+    height: 400px;
+    z-index: 5;
+}
+
+#construct {
+    position: absolute;
+    top: -200px;
+    right: 0px;
+    width: 900px;
+    height: 1300px;
+    z-index: 6;
+}
+
+#footer {
+    width: 100%;
+    height: 100px;
+    background-color: #ECE8E1;
+}
+
+#footer #text_area {
+    display: flex; /* 가로 배치 */
+    justify-content: center; /* 좌우 중앙 정렬 */
+}
+
+#footer h3 {
+    font-size: 15px;
+    color: #969696;
+}
+
+#footer hr {
+    height: 2px;
+    width: 80%;
+    background-color: #969696;
+    border: none;
+    margin: 0 auto;
+}

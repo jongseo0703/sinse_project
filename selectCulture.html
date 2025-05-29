@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/selectCulture_page_styles.css">
+</head>
+<body>
+    <div id="header">
+        <img src="./images/logo.png" alt="">
+        <div id="menu">
+            <h2 id="jRegion">일본 지역별 정보</h2>
+            <h2 id="jTips">일본 여행 꿀팁</h2>
+            <h2 id="jCulture">일본 문화</h2>
+        </div>
+    </div>
+    <div class="container">
+        <div class="overlay-first"></div>
+        <h2 id="title">일본 문화 즐겨보기</h2>
+        <div class="section-wrapper">
+            <div class="overlay-second"></div>
+            <div id="left_section">
+                <h2 class="title">온천</h2>
+                <p class="description">각 일본 유명 온천들을 알아 볼 수 있습니다.</p>
+                <button>바로가기</button>
+            </div>
+            <div id="center_section">
+                <h2 class="title">축제</h2>
+                <p class="description">일본의 유명 축제에 대해서 알아볼 수 있습니다.</p>
+                <button>바로가기</button>
+            </div>
+            <div id="right_section">
+                <h2 class="title">관광명소</h2>
+                <p class="description">일본의 유명 관광명소에 대해서 알아볼 수 있습니다.</p>
+                <button>바로가기</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    //헤더의 메뉴들에 대한 변수들
+    let logo = document.querySelector("#header img");
+    let jRegion = document.getElementById("jRegion");
+    let jTips = document.getElementById("jTips");
+    let jCulture = document.getElementById("jCulture");
+
+    let section_wrapper = document.querySelector(".section-wrapper");
+    let leftSection = document.getElementById('left_section');
+    let centerSection = document.getElementById('center_section');
+    let rightSection = document.getElementById('right_section');
+
+    let leftButton = document.querySelector("#left_section button");
+    let centerButton = document.querySelector("#center_section button");
+    let rightButton = document.querySelector("#right_section button");
+
+    //경로를 이동하기 위한 함수
+    function moveRoutes() {
+        logo.addEventListener("click", () => {
+            location.href = 'main.html';
+        });
+
+        jCulture.addEventListener("click", () => {
+            location.href = 'selectCulture.html';
+        });
+
+        jTips.addEventListener("click", () => {
+            location.href = 'tips.html';
+        });
+
+        jRegion.addEventListener("click", () => {
+            location.href = 'selectRegion.html';
+        });
+
+        leftButton.addEventListener("click", () => {
+            location.href = 'spa.html';
+        });
+
+        centerButton.addEventListener("click", () => {
+            location.href = 'festival.html';
+        });
+
+        rightButton.addEventListener("click", () => {
+            location.href = 'culture.html';
+        });
+    }
+
+    //마우스호버 이벤트를 leftSection에 부여
+    leftSection.addEventListener('mouseenter', () => {
+        //왼쪽에 마우스를 올리면 중간이랑 오른쪽 클래스 제거
+        section_wrapper.classList.add('hover-left');
+        section_wrapper.classList.remove('hover-center', 'hover-right');
+        leftSection.classList.add('hovered');
+    });
+
+    centerSection.addEventListener('mouseenter', () => {
+        //중간에 마우스를 올리면 왼쪽이랑 오른쪽 클래스 제거
+        section_wrapper.classList.add('hover-center');
+        section_wrapper.classList.remove('hover-left', 'hover-right');
+        centerSection.classList.add('hovered');
+    });
+
+    rightSection.addEventListener('mouseenter', () => {
+        //오른쪽에 마우스를 올리면 왼쪽이랑 중간 클래스 제거
+        section_wrapper.classList.add('hover-right');
+        section_wrapper.classList.remove('hover-center', 'hover-left');
+        rightSection.classList.add('hovered');
+    });
+
+    //마우스가 컨테이너를 벗어나면 클래스 제거
+    section_wrapper.addEventListener('mouseleave', () => {
+        section_wrapper.classList.remove('hover-left', 'hover-center', 'hover-right');
+        centerSection.classList.remove('hovered');
+        rightSection.classList.remove('hovered');
+        leftSection.classList.remove('hovered');
+    });
+
+    addEventListener("load", () => {
+        moveRoutes();
+    });
+</script>

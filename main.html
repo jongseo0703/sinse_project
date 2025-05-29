@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/main_page_styles.css">
+</head>
+<body>
+    <div id="header">
+        <img src="./images/logo.png" alt="">
+        <div id="menu">
+            <h2 id="jRegion">일본 지역별 정보</h2>
+            <h2 id="jTips">일본 여행 꿀팁</h2>
+            <h2 id="jCulture">일본 문화</h2>
+        </div>
+    </div>
+    <div id="wrapper">
+        <div id="title-container">
+            <div class="overlay"></div>
+            <h2>VIRTUAL JAPAN TOUR</h2>
+            <div id="rect"></div>
+        </div>
+        <div id="region-container">
+            <h1 class="site-logo">JAPAN</h1>
+            <h1 class="site-logo">TOUR</h1>
+            <h2>일본 지역별 정보</h2>
+            <div id="region-img">
+                <div class="img-box" id="kaido">
+                    <img src="./images/훗카이도.png" alt="">
+                    <h3>훗카이도</h3>
+                </div>
+                <div class="img-box" id="hoko">
+                    <img src="./images/도호쿠.png" alt="">
+                    <h3>도호쿠</h3>
+                </div>
+                <div class="img-box" id="kanto">
+                    <img src="./images/간토.png" alt="">
+                    <h3>간토</h3>
+                </div>
+            </div>
+            <div id="rect2"></div>
+        </div>
+        <div id="culture-container">
+            <img src="./images/축제아이콘.png" alt="">
+            <div id="right_section">
+                <div id="text_area">
+                    <hr style="height: 2px; width: 120%; background-color: white; border: none;">
+                    <h1>일본 문화</h1>
+                    <h3>다양한 일본 문화 알아보기</h3>
+                    <p>한국 문화와는 색다른 일본 문화를 만나볼 수 있습니다.</p>
+                </div>
+                <button>둘러보기</button>
+            </div>
+        </div>
+        <div id="tips-container">
+            <h1 class="site-logo">TIPS</h1>
+            <div id="left_section">
+                <div id="text_area">
+                    <hr style="height: 2px; width: 110%; background-color: #969696; border: none;">
+                    <h1>일본 여행 꿀팁</h1>
+                    <h3>일본 여행에서 알고 있으면 좋은 꿀팁들의 정보를 얻어가세요.</h3>
+                    <p>일본 여행에서 챙기면 좋은 소지품과 구매하면 도움이 되는 다양한 꿀팁들에 대해서 알아보세요.</p>
+                </div>
+                <button>둘러보기</button>
+            </div>
+            <div id="blur"></div>
+            <img src="./images/새들.png" alt="" id="bird">
+            <img src="./images/건축물.png" alt="" id="construct">
+        </div>
+        <div id="footer">
+            <hr>
+            <div id="text_area">
+                <h3>Virtual Japan Tour 서울특별시 서대문구 명지전문대  | 대표자 : 박종서 | 대표전화  : 00-1234-5678</h3>
+                <h3>Copyright © Virtual Japan Tour All Rights Reserved.</h3>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script src="./js/Rect.js"></script>
+<script src="./lib/common.js"></script>
+<script>
+    let rectArray = []; //꾸밈 효과인 객체 Rect를 담고 있는 배열
+
+    //메인페이지의 첫번째 컨텐츠의 변수들
+    let region = document.getElementById("region-container");
+    let regionLogo1 = document.querySelector("#region-container .site-logo:nth-child(1)");
+    let regionLogo2 = document.querySelector("#region-container .site-logo:nth-child(2)");
+    let currentRegion1Y = 0; //위아래로 움직이기 위한 변수
+    let currentRegion2Y = 0;
+    let kaido = document.getElementById("kaido");
+    let hoko = document.getElementById("hoko");
+    let kanto = document.getElementById("kanto");
+
+    //메인페이지의 두번째 컨텐츠의 변수들
+    let culture = document.getElementById("culture-container");
+    let cultureIcon = document.querySelector("#culture-container img");
+    let cultureButton = document.querySelector("#culture-container button");
+    let currentCultureY = 0;
+
+    //메인페이지의 세번째 컨텐츠의 변수들
+    let tips = document.getElementById("tips-container");
+    let tipsLogo = document.querySelector("#tips-container .site-logo");
+    let tipsButton = document.querySelector("#tips-container button");
+    let currentTipsY = 0;
+    let birdIcon = document.getElementById("bird");
+    let currentBirdY = 0;
+    let currentBirdX = 0;
+
+    //헤더의 메뉴들에 대한 변수들
+    let logo = document.querySelector("#header img");
+    let jRegion = document.getElementById("jRegion");
+    let jTips = document.getElementById("jTips");
+    let jCulture = document.getElementById("jCulture");
+
+    //경로를 이동하기 위한 함수
+    function moveRoutes() {
+        logo.addEventListener("click", () => {
+            location.href = 'main.html';
+        });
+
+        jCulture.addEventListener("click", () => {
+            location.href = 'selectCulture.html';
+        });
+
+        jTips.addEventListener("click", () => {
+            location.href = 'tips.html';
+        });
+
+        jRegion.addEventListener("click", () => {
+            location.href = 'selectRegion.html';
+        });
+
+        cultureButton.addEventListener("click", () => {
+            location.href = 'selectCulture.html';
+        });
+
+        tipsButton.addEventListener("click", () => {
+            location.href = 'tips.html';
+        });
+
+        kaido.addEventListener("click", () => {
+            location.href = '훗카이도.html';
+        });
+
+        hoko.addEventListener("click", () => {
+            location.href = '도호쿠.html';
+        });
+
+        kanto.addEventListener("click", () => {
+            location.href = '간토.html';
+        });
+    }
+
+    //스크롤로 고정헤더를 만들기위한 함수
+    function headerScroll() {
+        let header = document.getElementById("header");
+        addEventListener("scroll", () => {
+            if(window.scrollY > 0) {
+                header.classList.add("scrolled");
+            }
+            else {
+                header.classList.remove("scrolled");
+            }
+        });
+    }
+
+    //rect를 만드는 함수
+    function createRect() {
+        for(let i = 0; i < 10; i++) {
+            rect = new Rect(document.getElementById("culture-container"), getRandom(1200), getRandom(500), 10, 10, "#FF547F");
+        }
+
+        for(let i = 0; i < 3; i++) {
+            rect2 = new Rect(document.getElementById("tips-container"), 300, 200 + 100 * i, 5, 5, "#969696");
+        }
+
+        rect3 = new Rect(document.getElementById("tips-container"), 300, 500, 15, 15, "#969696");
+    }
+
+    //사이트로고나 이미지가 위아래 혹은 대각선으로 움직이기 위한 함수
+    function moveIcon() {
+        region.addEventListener("wheel", function(e) {
+            currentRegion1Y = parseFloat(regionLogo1.style.top) || 0;
+            currentRegion2Y = parseFloat(regionLogo2.style.top) || 280;
+
+            let moveAmount = -e.deltaY * 0.1;
+
+            currentRegion1Y += moveAmount;
+            currentRegion2Y += moveAmount;
+
+            regionLogo1.style.top = currentRegion1Y + "px";
+            regionLogo2.style.top = currentRegion2Y + "px";
+        });
+
+        culture.addEventListener("wheel", function(e) {
+            currentCultureY = parseFloat(cultureIcon.style.top) || 0;
+
+            let moveAmount = -e.deltaY * 0.1;
+
+            currentCultureY += moveAmount;
+
+            cultureIcon.style.top = currentCultureY + "px";
+        });
+
+        tips.addEventListener("wheel", function(e) {
+            currentBirdY = parseFloat(birdIcon.style.top) || 0;
+            currentBirdX = parseFloat(birdIcon.style.left) || 1200;
+
+            currentTipsY = parseFloat(tipsLogo.style.top) || 0;
+
+            let moveAmount = -e.deltaY * 0.1;
+
+            currentBirdY += moveAmount;
+            currentBirdX += moveAmount;
+
+            currentTipsY += moveAmount;
+
+            birdIcon.style.top = currentBirdY + "px";
+            birdIcon.style.left = currentBirdX + "px";
+
+            tipsLogo.style.top = currentTipsY + "px";
+        });
+
+    }
+
+    //초기화 함수
+    function init() {
+        moveRoutes();
+        headerScroll();
+        createRect();
+        moveIcon();
+    }
+
+    //윈도우가 로드될 때, 시작할 때..
+    addEventListener("load", function() {
+        init();
+    });
+</script>

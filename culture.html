@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/culture_page_styles.css">
+</head>
+<body>
+    <div id="header">
+        <img src="./images/logo.png" alt="">
+        <div id="menu">
+            <h2 id="jRegion">일본 지역별 정보</h2>
+            <h2 id="jTips">일본 여행 꿀팁</h2>
+            <h2 id="jCulture">일본 문화</h2>
+        </div>
+    </div>
+    <div id="wrapper">
+        <div id="container">
+            <h1 class="site-logo">JAPAN</h1>
+            <h1 class="site-logo">TOUR</h1>
+            <h1 class="site-logo">観光</h1>
+            <div id="section">
+                <h2>관광명소</h2>
+                <div id="image-container">
+                    <div class="slider"></div>
+                </div>
+                <div id="button-container"></div>
+            </div>
+        </div>
+        <div id="footer">
+            <hr>
+            <div id="text_area">
+                <h3>Virtual Japan Tour 서울특별시 서대문구 명지전문대  | 대표자 : 박종서 | 대표전화  : 00-1234-5678</h3>
+                <h3>Copyright © Virtual Japan Tour All Rights Reserved.</h3>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    //헤더의 메뉴들에 대한 변수들
+    let logo = document.querySelector("#header img");
+    let jRegion = document.getElementById("jRegion");
+    let jTips = document.getElementById("jTips");
+    let jCulture = document.getElementById("jCulture");
+
+    let section = document.getElementById("section");
+    let button_container = document.getElementById("button-container");
+    let image_container = document.getElementById("image-container");
+    let slider = document.querySelector(".slider");
+    let currentIndex = 0; //현재 인덱스(즉, 메인에 있는 이미지의 인덱스)
+    let maxImage = 9; //이미지의 총 수
+    let btnArray = [];
+    
+    //각 문화재의 이미지를 담은 배열
+    let imgArray = [
+        "./images/cultureImage/img1.jpg",
+        "./images/cultureImage/img2.jpg",
+        "./images/cultureImage/img3.jpg",
+        "./images/cultureImage/img4.jpg",
+        "./images/cultureImage/img5.jpg",
+        "./images/cultureImage/img6.jpg",
+        "./images/cultureImage/img7.jpg",
+        "./images/cultureImage/img8.jpg",
+        "./images/cultureImage/img9.jpg"
+    ];
+
+    //각 문화재의 이름을 담은 배열
+    let cultureNameArray = [
+        "오사카시의 오사카성",
+        "히메지시의 히메지성",
+        "오사카시의 유니버셜스튜디오",
+        "히로시마현의 이쓰쿠시마신사",
+        "도쿄도의 스카이트리",
+        "교토시의 금각사",
+        "간토의 닛코국립공원",
+        "요코하마시의 미나토미라이",
+        "시즈오카현의 후지산"
+    ];
+
+    //각 문화재의 설명을 담은 배열
+    let cultureDescriptions = [
+        "오사카성은 오사카에서 가장 유명한 랜드마크로 꼽히며, 치열한 권력 다툼 끝에 1603년 에도 시대의 기반이 닦인 곳이기도 합니다. 성의 역사는 1583년까지 거슬러 올라가며, 성의 상징인 천수각은 1931년 재건되었습니다. 지금은 성과 인접한 역사박물관에 유구한 역사의 기록물들이 보관되어 있으며, 주변 공원과 녹지는 조깅하거나 자전거를 타며 휴식을 취하기에 좋은 곳입니다. 오사카성 주변에는 106헥타르에 달하는 야외 공원이 있어 도회적인 도시 지역에서 기분 좋게 떠날 수 있는 도피처가 되어줍니다. 달리기를 즐기는 현지인들과 함께 외곽 해자를 따라 달려보거나, 고자부네 유람선을 타고 다른 각도에서 성을 돌아볼 수 있습니다. 벚나무, 살구나무, 매화나무가 많아, 봄과 가을이 되면 다양한 식물이 아름다운 풍경을 선사합니다.",
+        "히메지성은 백로성이라고도 알려져 있으며 일본의 국보이자 세계문화유산이기도 합니다. 일본에 있는 기존 모습을 유지한 12개 성 중 하나라는 위치를 고려할 때 일본 역사에 관심이 있는 사람이라면 이 요새는 꼭 방문해 봐야 합니다. 히메지성은 600년 전에 지어졌습니다. 교토 서쪽의 전략적인 방어 지점으로 선택된 최초의 요새는 1400년대의 어느 시기에 지어졌습니다. 현재의 성 단지는 1609년 다이묘 이케다 데루마사의 감독하에 완공되었고 일련의 미로 같은 구불구불한 길로 연결된 80개 이상의 건물로 구성되어 있습니다. 오테몬문은 히메지성으로 들어가는 정문이며 성에서 입장료가 없는 구역인 세 번째 성곽 안뜰, 산노마루로 들어갈 수 있습니다. 많은 벚나무가 심어진 넓은 잔디밭이 있는 구역이라 봄에는 벚꽃놀이로 유명합니다.",
+        "2001년 3월 개장한 ‘유니버설 스튜디오 재팬’은 할리우드의 유명한 영화를 테마로 한 탈것과 쇼, 어트랙션으로 어린이부터 어른에 이르기까지 흥미진진하게 할리우드를 체험할 수 있도록 구성한 테마파크이다. 공원 안은 초호(礁湖)를 중심으로 샌프란시스코, 뉴욕, 할리우드, 해리포터, 스누피 스튜디오, 애미티 빌리지, 워터월드, 쥬라기공원 등의 구역으로 나누어져 있다. 2014년 이후로 생긴 '해리포터 앤 더 포비든 저니', '플라이트 오브 더 히포그리프' 두 가지 어트랙션은 최고의 인기 어트랙션이다. 이 외의 인기있는 어트랙션으로는 타임머신을 타고 과거와 미래를 구경하는 백투 더 퓨처, 자전거를 타고 우주를 여행하는 ET 어드벤처, 보트를 타고 공룡이 살아 있는 열대우림을 탐색하는 쥬라기공원, 입체영상으로 보는 터미네이터 2, 무서운 백상어가 있는 바다를 항해하는 조스 보트 여행 등이 있다.",
+        "이쓰쿠시마라는 이름은 문자 그대로 '숭배의 섬'을 의미하며 고대부터 섬 자체가 신으로 숭배되었습니다.물 위에 세워진 신비로운 이쓰쿠시마 신사는 1996년에 세계유산으로 등재되었습니다.사람들이 오랫동안 고대 의식을 행해온 이쓰쿠시마 신사는 세계적으로 유명해졌으며 일본 전역과 전 세계에서 방문객을 끌어들입니다. 예로부터 참배자들은 세토 내해의 안전을 기원하기 위해 이쓰쿠시마 신사에 왔습니다.헤이안 시대 말기부터 다이라노 기요모리가 신사에 참배하러 왔을 때부터 신사의 이름이 널리 퍼졌습니다.이쓰쿠시마 신사에서 경의를 표한다는 아이디어는 세토 내해를 항해하는 어부와 상인들 사이에서 인기를 얻었습니다.에도 시대에는 이세 신사와 시코쿠 신사의 유명한 순례와 함께 이쓰 쿠시마 신사가 서일본에 거주하는 사람들의 주요 순례지가되었습니다.",
+        "수도 도쿄의 스카이라인 위로 우뚝 솟은 도쿄 스카이트리는 무려 634m 높이로 도쿄 시내가 시원하게 펼쳐지는 경이로운 전망을 선사합니다. 날씨가 맑은 날이면 무한의 세계까지 보이는 것은 아니지만 도쿄 시내에서 후지산이 보이는 몇 안 되는 지점입니다. 도쿄 스카이트리는 2012년에 처음 문을 연 이래 시내 중심가 어디서나 눈에 들어오는 엄청난 존재감으로 순식간에 도쿄의 랜드마크 자리를 차지했습니다. 완공 당시 세계에서 가장 높은 건물이었으며 지금도 일본에서는 가장 높은 건물입니다. 아사쿠사 에서 걸어서 갈 만한 거리에 있기 때문에 두 곳을 모두 둘러보는 일정을 짜서 반나절이면 일본 건축의 전통적인 측면과 현대적인 측면을 모두 구경할 수 있다는 것도 장점입니다.",
+        "금각사(鹿苑寺)는 교토시 기타구에 위치한 임제종상국사파의 사원이며 일본에서도 특히 유명한 관광지 중 하나입니다. 관광객을 유혹합니다. 일년 내내 많은 관광객들이 방문하는 장소이며 일본을 방문했을 때 꼭 들러보고 싶은 장소 중 하나입니다. 금각사(鹿錣寺)는 교토시 기타구에 위치한 임제종상국사파 사원으로 일본에서도 특히 유명한 관광지 중 하나입니다. 이 사원은 1397년 무로마치 막부의 3대 장군, 아시카가 요시만에 의해 창건되었습니다. 금각사의 정식 명칭은 '가엔지'라고 하지만, 경내에 있는 금박으로 덮인 사리전(金閣)이 매우 유명하기 때문에 일반적으로 금각사로 알려져 있습니다. 아름다운 금박의 빛과 주변의 자연과의 조화가 방문하는 사람들을 매료시킵니다. 사원은 광대한 정원으로 둘러싸여 있으며, 이케센 회유식 정원 안에는 많은 돌과 식물이 배치되어 사계절의 자연미를 즐길 수 있습니다. 또한 금각사는 1994년 유네스코 세계유산에 등록되어 국제적인 평가를 받고 있습니다.",
+        "닛코 국립공원에서는 자연의 품에서 편안하게 여유를 즐기실 수 있어요. 이곳에서는 혼슈 섬 도치기현의 산속에서 예스러운 신사와 사원을 만날 수 있죠. 닛코의 사원은 수려한 산악과 아름다운 폭포, 근사한 온천과 이웃하고 있어 온몸으로 자연의 매력을 느낄 수 있으며, 이곳을 찾는 참배객과 자연을 사랑하는 이들, 문화 및 역사 애호가에게 감동을 선사합니다. 숨 막힐 듯 아름다운 경관을 자랑하는 닛코의 두 신사(도쇼구와 후타라산)와 불교 사찰(린노지) 역시 오랫동안 성지로 추앙받아왔어요. 닛코 국립공원은 세 곳의 성산(聖山)인 난타이 산, 다로 산, 뇨호 산의 신성한 정취와 보존 상태가 우수한 아름다운 건축물에 힘입어 1999년 유네스코 세계문화유산으로 등재되었죠. 그리고 사원 부지에 자리한 103채의 건물 중 9채는 일본의 국보로 지정되어 있고, 90여 채 또한 중요문화재로 선정되어 있답니다.",
+        "편리한 중심적 위치, 여러 열린 공간, 먹거리볼거리즐길 거리가 풍부한 미나토 미라이 21은 활기찬 도시 요코하마 를 여행하는 거점으로 딱 맞는 곳입니다. 중심부에는 파시피코 요코하마 컨벤션 센터와 해안의 넓은 녹지 린코 공원이 있습니다. 1980년대부터 중앙 정부의 주도 아래 계획 정비된 이 지구는 상업, 관광, 레저의 활기찬 중심지로 발전했습니다. 미나토 미라이 21 지구에서는 연중 다양한 이벤트가 펼쳐집니다. 방문 시점이 콘서트, 아트 갤러리, 야간 일루미네이션 쇼, 역사나 문화 전시회 기간과 겹칠 수도 있습니다. 일회성 행사 외에도 요코하마 미술관, 요코하나 노 극장, 미쓰비시 미나토미라이 기술관, 가나가와 예술 극장 등에서 상설 전시와 수시로 진행되는 공연을 즐길 수 있습니다.",
+        "3,776m 높이의 후지산 은 일본에서 가장 높은 봉우리이며 약 10만 년 전에 시작된 화산 활동의 결과로 형성되었습니다. 현재 후지산과 그 주변 지역은 하이킹, 캠프, 휴식을 위한 인기 있는 휴양지가 되었습니다. 일본의 가장 대표적인 상징 중 하나를 보기 위해 전 세계에서 많은 관광객이 시즈오카현 와 야마나시현 를 찾아 탄성을 자아내는 산의 풍경을 구경합니다. 하지만 일본인에게 후지산 은 오랫동안 영적으로 중요한 장소이자 예술적 영감의 원천이었습니다. 매년 여름 20만~30만 명의 등산객이 후지산 에 오릅니다. 정상 등반은 해돋이 시간대에 가장 인기가 많습니다. 보통은 정상 등반 바로 전날 산을 오르기 시작해 산장에서 1박을 하고, 다음날 아침 일찍 길을 나서 수평선에 해가 떠오르는 장면을 보러 갑니다. 근대 이전까지 후지산 '슈겐자', 즉 산을 모시고 숭상하는 산악 신앙의 수행자들이 수련을 위해 찾는 곳이었으며, 일반 하층민들도 후지산으로 순례를 오가곤 했습니다. 산기슭의 수많은 신사는 후지산의 영적이고 역사적인 중요성을 잘 보여줍니다."
+    ];
+
+    //경로를 이동하기 위한 함수
+    function moveRoutes() {
+        logo.addEventListener("click", () => {
+            location.href = 'main.html';
+        });
+        
+        jCulture.addEventListener("click", () => {
+            location.href = 'selectCulture.html';
+        });
+
+        jTips.addEventListener("click", () => {
+            location.href = 'tips.html';
+        });
+
+        jRegion.addEventListener("click", () => {
+            location.href = 'selectRegion.html';
+        });
+    }
+
+    //이미지 렌더링 함수
+    function renderImages() {
+        slider.innerHTML = ""; //이미지 초기화
+
+        for (let i = 0; i < imgArray.length; i++) {
+            let slideItem = document.createElement("div");
+            slideItem.classList.add("slide-item");
+            slideItem.style.position = "relative";
+
+            let img = document.createElement("img");
+            img.src = imgArray[i];
+
+            let caption = document.createElement("div");
+            caption.classList.add("caption");
+
+            //캡션의 HTML을 script로 만듦.
+            caption.innerHTML = `
+            <div class="caption-number">${(i + 1).toString().padStart(2, '0')}</div>
+            <div class="caption-content">
+            <h3>${cultureNameArray[i]}</h3>
+            <p>${addLineBreaks(cultureDescriptions[i], 35)}</p>
+            </div>
+            `;
+
+            caption.style.display = "none";
+
+            slideItem.appendChild(img);
+            slideItem.appendChild(caption);
+            slider.appendChild(slideItem);
+        }
+        updateImageStyles();
+    }
+
+    //현재 인덱스 기준 이미지 스타일 업데이트 (흐림 처리)
+    function updateImageStyles() {
+        let imgs = slider.querySelectorAll("img");
+        let captions = slider.querySelectorAll(".caption");
+        for (let i = 0; i < imgs.length; i++) {
+            if (i == currentIndex) {
+                imgs[i].style.opacity = "1";
+                captions[i].style.display = "block";
+            } else {
+                imgs[i].style.opacity = "0.3";
+                //대기중인 캡션은 설명이 보이지 않아야 하므로 none
+                captions[i].style.display = "none";
+            }
+        }
+    }
+
+    //부드럽게 이동하기 위한 함수
+    function moveSlider(index) {
+        let moveDistance = 900; //오른쪽 마진이 300이고, 이미지 너비가 600이므로 300 + 600
+        slider.style.transform = `translateX(-${index * moveDistance}px)`;
+        currentIndex = index;
+        updateImageStyles();
+        updateButtons();
+    }
+
+    //버튼 생성 함수
+    function createButton() {
+        for (let i = 0; i < maxImage; i++) {
+            let button = document.createElement("button");
+            button.style.border = "1.5px solid black";
+            button.style.backgroundColor = "transparent";
+            button.style.width = "40px";
+            button.style.height = "10px";
+            button.addEventListener("click", () => {
+                moveSlider(i);
+            });
+            btnArray.push(button);
+            button_container.appendChild(button);
+        }
+    }
+
+    //버튼 상태 업데이트 함수 (현재 선택된 버튼 색상 변경)
+    function updateButtons() {
+        for (let i = 0; i < btnArray.length; i++) {
+            //현재 버튼이면 #FF83A2 색, 아니면 투명색 부여
+            btnArray[i].style.backgroundColor = (i == currentIndex) ? "#FF83A2" : "transparent";
+        }
+    }
+
+    //줄바꿈을 처리하기 위한 함수
+    function addLineBreaks(text, maxLineLength) {
+        let result = "";
+        //maxLineLength만큼 문자열을 뽑아서 <br>태그를 더함으로 줄바꿈이 이루어짐
+        for (let i = 0; i < text.length; i += maxLineLength) {
+            result += text.substr(i, maxLineLength) + "<br>";
+        }
+        return result;
+    }
+
+    function headerScroll() {
+        let header = document.getElementById("header");
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 0) {
+                header.classList.add("scrolled");
+            } else {
+                header.classList.remove("scrolled");
+            }
+        });
+    }
+
+    function init() {
+        moveRoutes();
+        headerScroll();
+        createButton();
+        renderImages();
+        moveSlider(0);
+    }
+
+    addEventListener("load", () => {
+        init();
+    });
+</script>

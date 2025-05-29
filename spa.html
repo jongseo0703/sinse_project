@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/spa_page_styles.css">
+</head>
+<body>
+    <div id="header">
+        <img src="./images/logo.png" alt="">
+        <div id="menu">
+            <h2 id="jRegion">일본 지역별 정보</h2>
+            <h2 id="jTips">일본 여행 꿀팁</h2>
+            <h2 id="jCulture">일본 문화</h2>
+        </div>
+    </div>
+    <div id="wrapper">
+        <div id="container">
+            <h1 class="site-logo">JAPAN</h1>
+            <h1 class="site-logo">TOUR</h1>
+            <h1 class="site-logo">温泉</h1>
+            <div id="section">
+                <h2>온천</h2>
+                <div id="image-container">
+                    <div class="slider"></div>
+                </div>
+                <div id="button-container"></div>
+            </div>
+        </div>
+        <div id="footer">
+            <hr>
+            <div id="text_area">
+                <h3>Virtual Japan Tour 서울특별시 서대문구 명지전문대  | 대표자 : 박종서 | 대표전화  : 00-1234-5678</h3>
+                <h3>Copyright © Virtual Japan Tour All Rights Reserved.</h3>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    //헤더의 메뉴들에 대한 변수들
+    let logo = document.querySelector("#header img");
+    let jRegion = document.getElementById("jRegion");
+    let jTips = document.getElementById("jTips");
+    let jCulture = document.getElementById("jCulture");
+
+    let section = document.getElementById("section");
+    let button_container = document.getElementById("button-container");
+    let image_container = document.getElementById("image-container");
+    let slider = document.querySelector(".slider");
+    let currentIndex = 0; //현재 인덱스(즉, 메인에 있는 이미지의 인덱스)
+    let maxImage = 9; //이미지의 총 수
+    let btnArray = [];
+    
+    //각 온천의 이미지를 담은 배열
+    let imgArray = [
+        "./images/onsenImage/img1.jpg",
+        "./images/onsenImage/img2.jpg",
+        "./images/onsenImage/img3.jpg",
+        "./images/onsenImage/img4.jpg",
+        "./images/onsenImage/img5.jpg",
+        "./images/onsenImage/img6.jpg",
+        "./images/onsenImage/img7.jpg",
+        "./images/onsenImage/img8.jpg",
+        "./images/onsenImage/img9.jpg"
+    ];
+
+    //각 온천의 이름을 담은 배열
+    let onsenNameArray = [
+        "오이타현의 유후인 온천",
+        "오이타현의 벳푸 온천",
+        "가나가와현의 하코네 온천",
+        "훗카이도의 노보리베츠 온천",
+        "군마현의 쿠사츠 온천",
+        "효고현의 기노사키 온천",
+        "효고현의 아리마 온천",
+        "군마현의 시마 온천",
+        "가고시마현의 이부스키 온천"
+    ];
+
+    //각 온천의 설명을 담은 배열
+    let onsenDescriptions = [
+        "유후인 온천(由布院温泉)은 일본 규슈 오이타현 유후시에 있는 온천이다. 벳푸시의 서쪽에 위치하고 있으며, 후쿠오카시에서 기차로 2시간 남짓 걸리는 유후인 마을에 있다. 유후인 온천은 벳푸, 구사쓰에 이어서 일본에서 3번째로 용출량이 많은 온천이다. 기차를 타고 와서 유후인역에 내린다면 유후다케(해발 1,584m)라는 산이 유후인을 감싸고 있는 것을 발견할 수 있으며, 유후인역에서 '긴린코'라는 호수까지 이르는 길에는 다양한 상점들과 온천 료칸, 미술관 등의 시설들이 이어져 있다. 유후인에는 다양한 온천 료칸이 있는데 무소엔, 사이가쿠관 등 유후다케의 시원한 전망을 가지는 노천온천들이 있다.",
+        "현지에서는 벳푸 핫토라는 이름으로 알려진 벳푸 온천은 온천 마을 8곳이 모인 곳으로, 마을마다 독특한 특색을 자랑합니다. 온천마다 현대적이고 설비를 잘 갖춘 온천 목욕 시설과 함께 료칸이 있어, 욕탕에서 목욕을 즐기며 하룻밤 숙박할 수 있습니다. 벳푸역은 하카타, 오이타, 미야자키, 히토요시와 그 주변 지역에서 특급열차로 갈 수 있습니다. 마을 8곳 모두 벳푸역에서 대중교통으로 이동 가능한 거리에 위치합니다. 가장 가까운 에키마에코토 온천은 역에서 도보 2분 거리이며, 가장 먼 시바세키 온천은 버스로 약 30분 거리입니다.",
+        "하코네는 후지 하코네 이즈 국립공원 동쪽에 위치하고 있으며, 일본에서 가장 인기 있는 온천 마을 중 하나입니다. 도쿄에서 가깝고 교통도 편리하며, 장기 투숙을 원하는 경우 숙소 선택의 폭이 넓습니다. 후지 하코네 이즈 국립공원의 동쪽에 위치한 하코네는 일본에서 가장 인기 있는 온천 지구에 속합니다. 에도 시대(1603~1867)에는 이 지방이 도카이도 옛길을 따라가다 쉬어가는 주요 역참이었다고 합니다. 하코네에는 즐길 수 있는 온천이 매우 많으며, 각 온천마다 온천수의 특징도 조금씩 다릅니다.",
+        "노보리베츠 온천은 홋카이도를 대표하는 온천지로서 다양한 온천수질과 풍부한 관광 자원을 자랑합니다. 이 지역은 예로부터 아이누 민족에 의해 '약탕'으로 이용되어 온 역사를 가지고 있으며, 에도 시대부터는 더욱 널리 알려지게 되었습니다. 현재는 지고쿠다니(지옥계곡)와 오유누마가와 천연족욕탕, 노보리베츠 마린파크 닉스 등 많은 관광 명소가 방문객들을 매료시키고 있습니다. 노보리베츠 온천은 홋카이도 노보리베츠시에 위치한 홋카이도를 대표하는 온천지 중 하나입니다. 약 1만 년 전의 화산 활동에 의해 형성된 지형이 특징이며, 그 중심에는 '지고쿠다니'라고 불리는 활화산 지대가 있습니다. 이 지고쿠다니는 화산 가스가 분출하는 모습에서 '지옥'이라는 표현이 사용됩니다.",
+        "쿠사츠 온천은 일본을 대표하는 온천지 중 하나로 오랜 역사와 풍부한 자연을 자랑하는 곳이다. 온천을 좋아하는 사람이라면 누구나 알고 있는 이 곳은 풍부한 수량과 높은 수질로 유명하며 일본 3대 명천 중 하나로 꼽힌다. 이 아름다운 온천지는 사계절의 풍경을 즐길 수 있을 뿐만 아니라 다양한 관광 명소와 먹거리도 매력 중 하나다. 쿠사츠 온천은 군마현에 위치한 일본을 대표하는 온천지 중 하나다. 예로부터 '동쪽의 쿠사츠, 서쪽의 아리마'라고 불리며 일본 3대 명천으로 꼽힌다. 특히 그 풍부한 수량과 높은 수질은 전국적으로도 유명해 많은 온천 애호가들을 매료시켜 왔다. 쿠사츠 온천의 수질은 산성 유황천이 주를 이루며, 피부에 좋은 동시에 다양한 질병에 효능이 있는 것으로 알려져 있다.",
+        "기노사키 온천은 효고현  북부에 위치한 오래된 온천 휴양지입니다. 마을은 산과 바다로 둘러싸여 있고 벚꽃 피는 봄, 불꽃놀이가 펼쳐지는 여름, 눈 내리는 겨울을 비롯해 계절별 하이라이트가 펼쳐집니다. 기노사키 온천역은 마을로 가는 관문으로서, 산인 본선을 통해 교토와 오사카로 연결됩니다. 교토 또는 오사카에서 직행 특급열차를 타면 기노사키 온천역까지 약 2시간 반 정도 걸립니다. 마을에 흩어져 있는 7개의 공중목욕탕은 기노사키 고유의 특징적 요소 중 하나입니다. 방문객들은 1,300엔(2021년 11월 기준) 남짓한 비용으로 7개 온천 모두를 이용할 수 있는 당일 자유이용권을 구매할 수 있습니다. 또한 많은 곳에서 뜨거운 족욕을 할 수 있습니다. 마을의 료칸 중 하나에 숙박한다면, 입실 시간부터 퇴실 시간 사이에는 모든 공중 온천을 무료로 이용할 수 있습니다.",
+        "효고현 고베의 아리마 온천은 기후에 있는 게로 온천과 군마의 쿠사츠 온천과 함께 일본의 ‘3대 온천’ 중 하나로 손꼽힙니다. 300년 이상의 역사가 살아있는 아리마는 일본의 가장 오래된 온천 마을 중 하나이며 일본 여행객들에게도 꾸준히 사랑을 받아 온 곳입니다 이곳은 경치 좋은 고베시 외곽의 롯코 산맥 뒤에 위치해 있으며 자연, 문화 그리고 역사를 체험할 수 있는 풍부한 기회와 온천을 통해 힐링과 느긋한 휴식을 누릴 수 있습니다. 고베 시내에서 아리마 온천까지 약 30분 정도 소요됩니다. 산노미야와 고베에서 버스를 타실 수도 있습니다.",
+        "시마온천에서는 일본의 온천 문화를 가장 정통적이고 때 묻지 않은 상태로 체험할 수 있습니다. 군마현의 숲이 우거진 조용한 산속에 둥지를 튼 이 온천 마을은 오랜 세월 자연의 아름다움과 온천수의 치유력으로 널리 사랑받아 왔습니다. 한때는 무려 40,000가지 질병을 치료할 수 있다고 명성을 떨치기도 했는데, 여기서 '시마'라는 이름이 유래되었습니다. 일본어로 '시마'는 '4만'과 동음이기 때문입니다. 시마 온천에서는 현대 생활의 번잡함에서 벗어나 전통이 살아 숨 쉬고 자연이 중심이 되는 고요한 휴식을 만끽할 수 있습니다.",
+        "규슈의 남단에 자리잡은 이부스키 온천은 일본 어디에서도 찾아보기 힘든 온천 체험을 선사합니다. 이 해안의 낙원은 자연 상태에서 따뜻해진 화산 모래에 몸을 파묻고 특별한 치유 효과를 누릴 수 있는 이색적인 모래찜질로 유명합니다. 이부스키 온천은 환상적인 바다 전망, 울창한 아열대 풍경, 아름다운 현지의 매력으로 일본 남부에서 여유로운 휴가와 스릴 넘치는 모험을 즐기는 완벽한 여행지입니다. 이부스키 온천은 규슈의 주요 도시에서 쉽게 닿을 수 있어 주말 여행이나 장기 체류에 최적의 장소입니다."
+    ];
+
+    //경로를 이동하기 위한 함수
+    function moveRoutes() {
+        logo.addEventListener("click", () => {
+            location.href = 'main.html';
+        });
+
+        jTips.addEventListener("click", () => {
+            location.href = 'tips.html';
+        });
+
+        jCulture.addEventListener("click", () => {
+            location.href = 'selectCulture.html';
+        });
+
+        jRegion.addEventListener("click", () => {
+            location.href = 'selectRegion.html';
+        });
+    }
+
+    //이미지 렌더링 함수
+    function renderImages() {
+        slider.innerHTML = ""; //이미지 초기화
+
+        for (let i = 0; i < imgArray.length; i++) {
+            let slideItem = document.createElement("div");
+            slideItem.classList.add("slide-item");
+            slideItem.style.position = "relative";
+
+            let img = document.createElement("img");
+            img.src = imgArray[i];
+
+            let caption = document.createElement("div");
+            caption.classList.add("caption");
+
+            //캡션의 HTML을 script로 만듦.
+            caption.innerHTML = `
+            <div class="caption-number">${(i + 1).toString().padStart(2, '0')}</div>
+            <div class="caption-content">
+            <h3>${onsenNameArray[i]}</h3>
+            <p>${addLineBreaks(onsenDescriptions[i], 35)}</p>
+            </div>
+            `;
+
+            caption.style.display = "none";
+
+            slideItem.appendChild(img);
+            slideItem.appendChild(caption);
+            slider.appendChild(slideItem);
+        }
+        updateImageStyles();
+    }
+
+    //현재 인덱스 기준 이미지 스타일 업데이트 (흐림 처리)
+    function updateImageStyles() {
+        let imgs = slider.querySelectorAll("img");
+        let captions = slider.querySelectorAll(".caption");
+        for (let i = 0; i < imgs.length; i++) {
+            if (i == currentIndex) {
+                imgs[i].style.opacity = "1";
+                captions[i].style.display = "block";
+            } else {
+                imgs[i].style.opacity = "0.3";
+                //대기중인 캡션은 설명이 보이지 않아야 하므로 none
+                captions[i].style.display = "none";
+            }
+        }
+    }
+
+    //부드럽게 이동하기 위한 함수
+    function moveSlider(index) {
+        let moveDistance = 900; //오른쪽 마진이 300이고, 이미지 너비가 600이므로 300 + 600
+        slider.style.transform = `translateX(-${index * moveDistance}px)`;
+        currentIndex = index;
+        updateImageStyles();
+        updateButtons();
+    }
+
+    //버튼 생성 함수
+    function createButton() {
+        for (let i = 0; i < maxImage; i++) {
+            let button = document.createElement("button");
+            button.style.border = "1.5px solid black";
+            button.style.backgroundColor = "transparent";
+            button.style.width = "40px";
+            button.style.height = "10px";
+            button.addEventListener("click", () => {
+                moveSlider(i);
+            });
+            btnArray.push(button);
+            button_container.appendChild(button);
+        }
+    }
+
+    //버튼 상태 업데이트 함수 (현재 선택된 버튼 색상 변경)
+    function updateButtons() {
+        for (let i = 0; i < btnArray.length; i++) {
+            //현재 버튼이면 #FF83A2 색, 아니면 투명색 부여
+            btnArray[i].style.backgroundColor = (i == currentIndex) ? "#FF83A2" : "transparent";
+        }
+    }
+
+    //줄바꿈을 처리하기 위한 함수
+    function addLineBreaks(text, maxLineLength) {
+        let result = "";
+        //maxLineLength만큼 문자열을 뽑아서 <br>태그를 더함으로 줄바꿈이 이루어짐
+        for (let i = 0; i < text.length; i += maxLineLength) {
+            result += text.substr(i, maxLineLength) + "<br>";
+        }
+        return result;
+    }
+
+    function headerScroll() {
+        let header = document.getElementById("header");
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 0) {
+                header.classList.add("scrolled");
+            } else {
+                header.classList.remove("scrolled");
+            }
+        });
+    }
+
+    function init() {
+        moveRoutes();
+        headerScroll();
+        createButton();
+        renderImages();
+        moveSlider(0);
+    }
+
+    addEventListener("load", () => {
+        init();
+    });
+</script>

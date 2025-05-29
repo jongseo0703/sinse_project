@@ -1,0 +1,190 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+#header {
+    width: 100%;
+    height: 100px;
+    background-color: black;
+    position: sticky;
+    top: 0px;
+    z-index: 13;
+}
+
+#header img {
+    width: 100px;
+    height: 100px;
+    text-align: left;
+    float: left;
+}
+
+#menu h2 {
+    color: white;
+    float: right;
+    font-size: 18px;
+    padding-top: 25px;
+    padding-right: 20px;
+}
+
+.container {
+    width: 100%;
+    height: 100vh;
+    display: flex; /* 자식 요소들이 flex아이템 */
+    flex-direction: column; /* 자식요소들을 위아래로 정렬 */
+    justify-content: center; /* 세로 방향으로 자식요소들을 중앙 정렬 */
+    align-items: center; /* 가로 방향으로 자식요소들을 중앙 정렬 */
+    position: relative;
+    background-image: url('../images/culturePage.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.container .overlay-first {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+}
+
+/* not선택자로 오버레이되지 않은 요소들을 위로 보내기위해 z-index: 2로 설정 */
+.container > *:not(.overlay-first) {
+    position: relative;
+    z-index: 2;
+}
+
+.container #title {
+    font-size: 50px;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 100px;
+}
+
+.section-wrapper.hover-left .overlay-second {
+    background-image: url('../images/온천배경.png');
+    opacity: 1;
+}
+.section-wrapper.hover-center .overlay-second {
+    background-image: url('../images/문화.png');
+    opacity: 1;
+}
+.section-wrapper.hover-right .overlay-second {
+    background-image: url('../images/오사카성.jpg');
+    opacity: 1;
+}
+
+.section-wrapper {
+    position: relative;
+    display: flex;
+    width: 60%;
+    height: 50%;
+    margin-bottom: 250px;
+}
+
+#left_section,
+#center_section,
+#right_section {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 15px;
+    z-index: 2;
+    background: rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+#left_section {
+    border-bottom-left-radius: 30px;
+    border-top-left-radius: 30px;
+    border-right: 1px solid white;
+}
+
+#right_section {
+    border-bottom-right-radius: 30px;
+    border-top-right-radius: 30px;
+    border-left: 1px solid white;
+}
+
+.overlay-second {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover !important; /* 우선순위 최상위 */
+    background-position: center !important;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: 1;
+    border-radius: 30px;
+}
+
+/* 공통: hover 시 title 및 description */
+#left_section .description,
+#center_section .description,
+#right_section .description {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    color: #ddd;
+    font-size: 16px;
+    max-width: 200px;
+    text-align: center;
+    pointer-events: none;
+}
+
+#left_section.hovered .title,
+#center_section.hovered .title,
+#right_section.hovered .title {
+    transform: translateY(-100px);
+    opacity: 0.7;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transform-origin: bottom left;
+    margin: 0;
+}
+
+#left_section.hovered .description,
+#center_section.hovered .description,
+#right_section.hovered .description {
+    opacity: 1;
+}
+
+/* 공통: hover 시 title 및 description */
+#left_section button,
+#center_section button,
+#right_section button {
+    position: absolute;
+    top: 65%;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    color: white;
+    background-color: transparent;
+    border: none;
+    font-size: 16px;
+    max-width: 200px;
+    text-align: center;
+    pointer-events: none;
+}
+
+#left_section.hovered button,
+#center_section.hovered button,
+#right_section.hovered button {
+    opacity: 1;
+    pointer-events: auto;
+}

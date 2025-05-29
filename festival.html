@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/spa_page_styles.css">
+</head>
+<body>
+    <div id="header">
+        <img src="./images/logo.png" alt="">
+        <div id="menu">
+            <h2 id="jRegion">일본 지역별 정보</h2>
+            <h2 id="jTips">일본 여행 꿀팁</h2>
+            <h2 id="jCulture">일본 문화</h2>
+        </div>
+    </div>
+    <div id="wrapper">
+        <div id="container">
+            <h1 class="site-logo">JAPAN</h1>
+            <h1 class="site-logo">TOUR</h1>
+            <h1 class="site-logo">祭り</h1>
+            <div id="section">
+                <h2>축제</h2>
+                <div id="image-container">
+                    <div class="slider"></div>
+                </div>
+                <div id="button-container"></div>
+            </div>
+        </div>
+        <div id="footer">
+            <hr>
+            <div id="text_area">
+                <h3>Virtual Japan Tour 서울특별시 서대문구 명지전문대  | 대표자 : 박종서 | 대표전화  : 00-1234-5678</h3>
+                <h3>Copyright © Virtual Japan Tour All Rights Reserved.</h3>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    //헤더의 메뉴들에 대한 변수들
+    let logo = document.querySelector("#header img");
+    let jRegion = document.getElementById("jRegion");
+    let jTips = document.getElementById("jTips");
+    let jCulture = document.getElementById("jCulture");
+
+    let section = document.getElementById("section");
+    let button_container = document.getElementById("button-container");
+    let image_container = document.getElementById("image-container");
+    let slider = document.querySelector(".slider");
+    let currentIndex = 0; //현재 인덱스(즉, 메인에 있는 이미지의 인덱스)
+    let maxImage = 9; //이미지의 총 수
+    let btnArray = [];
+    
+    //각 축제의 이미지를 담은 배열
+    let imgArray = [
+        "./images/festivalImage/img1.jpg",
+        "./images/festivalImage/img2.jpg",
+        "./images/festivalImage/img3.jpg",
+        "./images/festivalImage/img4.jpg",
+        "./images/festivalImage/img5.jpg",
+        "./images/festivalImage/img6.jpg",
+        "./images/festivalImage/img7.jpg",
+        "./images/festivalImage/img8.jpg",
+        "./images/festivalImage/img9.jpeg"
+    ];
+
+    //각 축제의 이름을 담은 배열
+    let festivalNameArray = [
+        "이바라키의 미토 매화축제",
+        "아오모리의 히로사키 벚꽃축제",
+        "다카야마의 봄축제",
+        "도쿄의 산자 축제",
+        "아이치의 아쓰타 축제",
+        "삿포로의 눈축제",
+        "아오모리 네부타 축제",
+        "이와테의 후지와라 가을 축제",
+        "가쿠노다테 축제"
+    ];
+
+    //각 축제의 설명을 담은 배열
+    let festivalDescriptions = [
+        "이바라키의 미토 매화축제에서는 분홍색과 흰색 매화꽃을 피워내는 매화나무가 심어져 있는 꿈결 같은 초원을 감상할 수 있습니다. 동일본에서 규모가 가장 큰 축제 중 하나인 미토 매화축제는 2월부터 3월까지 개최되고 3,000그루의 매화나무가 길고 추운 겨울과 작별하며 생기를 되찾습니다. 초봄에 스키를 즐기려면 니가타의 에치고유자와 온천을 찾아 에치고유자와 스노 페스티벌에서 횃불을 들고 슬로프를 내려오는 사람들을 감상해보세요. 황홀한 불꽃놀이와 휴식을 취할 수 있는 온천, 맛있는 길거리 음식도 놓치지 마세요.",
+        "봄이 찾아오면 일본 전역에서 수많은 관광객이 히로사키 벚꽃 축제를 보기 위해 모여듭니다. 아오모리현 히로사키시 히로사키 공원에서 열리는 이 축제는 약 2,600그루의 벚나무가 만개하며, 일본 3대 벚꽃 명소 중 하나로 손꼽힙니다. 유서 깊은 히로사키 성과 화려한 벚꽃이 어우러진 풍경은 일본 특유의 아름다운 봄을 선사하며, 방문객들을 매료시키고 있습니다. 2025년 히로사키 벚꽃 축제는 4월 18일(금)부터 5월 5일(월, 공휴일)까지 18일간 개최됩니다. 낮에는 활짝 핀 벚꽃을 감상하고, 밤에는 라이트업된 야간 벚꽃을 즐길 수 있으며, 보트 체험과 다양한 이벤트도 준비되어 있습니다.",
+        "매년 4월 14일과 15일이면 수만 명의 사람이 다카야마 봄축제를 즐기러 모여듭니다. 정교하고 거대한 축제용 수레와 전통 음악이 등장하는 이 행사는 일본에서 가장 아름다운 3대 축제 하나로 꼽힙니다. 다카야마에 오시는 가장 편리한 방법은 대중교통입니다. 나고야 에서 매시간 출발하는 열차를 타면 약 20분 정도 소요됩니다. 또한 도야마에서 다카야마까지 일반 열차와 고속버스로 연결되어 있으며, 마쓰모토까지 고속버스 노선이 있습니다. 축제의 중심은 ‘야타이'입니다. 정교한 축제용 수레들이 아침부터 저녁까지 행진을 벌입니다. 일부 수레에는 '가라쿠리'라는 인형을 태웁니다. 오전 나절과 이른 오후에 가라쿠리 인형들이 전통춤을 공연합니다. 날씨가 좋지 않으면 야타이를 창고 안에 보관하고 문을 열어둡니다.",
+        "여름을 좋아하고 따뜻한 날씨를 기다리신다면 ​산자 축제를 놓칠 수 없습니다. 도쿄 아사쿠사에서 열리는 이 행사에는 미코시(제례용 신여)와 함께하는 활기찬 퍼레이드와 화려한 신사의 모습이 한데 어우러집니다. 일본 전체에서 가장 큰 축제 중 하나인 하카타 돈타쿠 축제는 3만 명에 달하는 참가자가 모이며, 매년 2백만 명이 넘는 방문객이 찾아옵니다. 이 축제의 주요 볼거리는 여러 공연과 퍼레이드입니다. 산자 축제는 진정한 오감의 향연이라 할 수 있습니다. 신토의 신을 모신 자리를 상징하는 신전 모양을 한 가마인 미코시 100대가 주인공입니다. 동네마다 미코시 팀을 꾸려 신사 사이의 거리를 통과하며, 가는 길에는 함성을 지르기도 하고 거대한 가마를 흔들기도 합니다.",
+        "아이치의 ​아쓰타 축제는 등불 전시와 맛난 음식, 무용이 한데 어우러져 활기찬 분위기를 자아냅니다. 약 2,000년의 역사를 가진 신사에서 열리는 이 축제는 독특한 일본의 전통을 탐방할 훌륭한 기회입니다. 봉건 시대에 영감을 받은 문화로 가득한 축제인 가나자와 햐쿠만고쿠 축제는 흥미로운 사무라이 재현과 북 공연, 멋진 행진을 감상할 수 있는 좋은 기회입니다. 1,900년 된 아쓰타진구 신궁 에서 6월 5일에 열리는 아쓰타 축제는 여름을 알리는 신호탄입니다. 아쓰타 축제는 춤과 북 공연, 겐토 마키와라 불탑, 축제 방문객이 입은 계절감이 느껴지는 면 기모노로 활기를 띱니다.",
+        "삿포로 눈 축제는 연간 200만 명 이상이 방문하는 삿포로 최대의 겨울 축제입니다. 1950년 오오도리 공원에서 중고등학생이 만든 얼음조각을 전시했던 것을 시작으로, 지금은 글로벌 느낌의 규모의 눈 축제로 발전하여 매년 2월에 개최됩니다. 축제는 오오도리, 스스키노, 츠도무 총 3개의 장소에서 진행됩니다. 메인 행사장인 오오도리 공원에는 약 1.5km에 걸쳐 크고 작은 눈 조각이 전시되며, 해가 진 후부터 밤 10시까지는 조명이 밝혀지고 프로젝션 맵핑 쇼가 진행되는 등 화려함이 배가 됩니다. 또한 홋카이도 각지에서 모인 맛집들의 음식들을 한 곳에서 맛볼 수 있는 즐거움도 있습니다. 스스키노 행사장은 화려한 얼음조각과 홋카이도 최대 번화가의 조명이 어우러져 환상적인 분위기를 자아내며, 츠도무 행사장에서는 거대한 미끄럼틀, 눈에 파묻힌 상태에서 기념 촬영을 할 수 있는 ‘인 투 더 스노우’ 등이 인기입니다.",
+        "아오모리 네부타 축제에는 거대한 입체형 종이 수레가 등장하며, 3백만 명 이상의 방문객이 찾아옵니다. 춤을 즐기기에 좋은 기회지만, 축제에 맞는 특별 의상을 입어야만 합니다. 이 5일간의 행사에 참여하려면 8월 초에 아오모리에 방문해보세요. 도쿠시마에도 ​아와오도리 축제라는 멋진 무용 축제가 있습니다. 여러 다양한 공연이 마련되어 있으며, 그중 일부는 사전 등록 없이 참여할 수 있습니다. 이 축제는 지역사회 공동체 문화의 정수이며, 축제 준비에 연관된 다채로운 역사와 전통이 존재합니다.",
+        "이와테 히라이즈미  지역의 츄손지 사원은 가을에 단풍색으로 물들어 절경을 이루며, 후지와라 가을축제  중에는 더욱 아름다워집니다. 금색당에 모신 후지와라 가문의 지도자들을 기리는 축제가 11월 초에 열립니다. 11월 1일 아침, 전통 의상을 입은 어린이와 승려의 행렬이 본당에서 금색당까지 이어집니다. 11월 3일에는 사원 야외무대에서 전통 노 가무극이 열립니다. 츄손지 사원에서는 11월 1일부터 3일간 히라이즈미 모쓰지를 비롯한 사원과 주변 건물을 건립한 후지와라 가문을 기념하는 축제가 열립니다. 가을축제는 10월부터 11월까지 열리는 국화 축제와 동시에 열립니다. 환한 국화꽃 색이 불타는 듯한 단풍잎과 어우러져 츄손지 사원에 화려한 융단이 깔립니다.",
+        "1600년대부터 이어진 역사 깊은 가쿠노다테 축제는 9월 초 아키타현 의 가쿠노다테시에서 열립니다. 이 축제에는 예술, 음악, 춤과 함께 격정적인 수레 싸움이 등장합니다. 수레 꼭대기에는 사무라이와 가부키 배우 인형이 장식되어 있습니다. 각 수레의 음악에는 독특한 멜로디와 전통이 있습니다. 참가자들은 축제를 위해 특별 제작한 의상을 입습니다. 1600년대 시작된 이 축제는 신사와 절이 공동으로 개최하여 일본에서 가장 독특한 축제 중 하나가 되었습니다. 히키야마라고 하는 섬세하게 장식된 4m 높이의 수레 18대가 거리를 화려하고 생생하게 변화시킵니다. 젊은 남자들이 마을을 가로질러 이 수레들을 끌고 가는 동안, 신토 신앙과 불교의 신들에게 기도를 올립니다. 그동안 여자들은 선명하고 화려한 기모노를 입고 지방의 전통춤을 춥니다."
+    ];
+
+    //경로를 이동하기 위한 함수
+    function moveRoutes() {
+        logo.addEventListener("click", () => {
+            location.href = 'main.html';
+        });
+        
+        jCulture.addEventListener("click", () => {
+            location.href = 'selectCulture.html';
+        });
+
+        jTips.addEventListener("click", () => {
+            location.href = 'tips.html';
+        });
+
+        jRegion.addEventListener("click", () => {
+            location.href = 'selectRegion.html';
+        });
+    }
+
+    //이미지 렌더링 함수
+    function renderImages() {
+        slider.innerHTML = ""; //이미지 초기화
+
+        for (let i = 0; i < imgArray.length; i++) {
+            let slideItem = document.createElement("div");
+            slideItem.classList.add("slide-item");
+            slideItem.style.position = "relative";
+
+            let img = document.createElement("img");
+            img.src = imgArray[i];
+
+            let caption = document.createElement("div");
+            caption.classList.add("caption");
+
+            //캡션의 HTML을 script로 만듦.
+            caption.innerHTML = `
+            <div class="caption-number">${(i + 1).toString().padStart(2, '0')}</div>
+            <div class="caption-content">
+            <h3>${festivalNameArray[i]}</h3>
+            <p>${addLineBreaks(festivalDescriptions[i], 35)}</p>
+            </div>
+            `;
+
+            caption.style.display = "none";
+
+            slideItem.appendChild(img);
+            slideItem.appendChild(caption);
+            slider.appendChild(slideItem);
+        }
+        updateImageStyles();
+    }
+
+    //현재 인덱스 기준 이미지 스타일 업데이트 (흐림 처리)
+    function updateImageStyles() {
+        let imgs = slider.querySelectorAll("img");
+        let captions = slider.querySelectorAll(".caption");
+        for (let i = 0; i < imgs.length; i++) {
+            if (i == currentIndex) {
+                imgs[i].style.opacity = "1";
+                captions[i].style.display = "block";
+            } else {
+                imgs[i].style.opacity = "0.3";
+                //대기중인 캡션은 설명이 보이지 않아야 하므로 none
+                captions[i].style.display = "none";
+            }
+        }
+    }
+
+    //부드럽게 이동하기 위한 함수
+    function moveSlider(index) {
+        let moveDistance = 900; //오른쪽 마진이 300이고, 이미지 너비가 600이므로 300 + 600
+        slider.style.transform = `translateX(-${index * moveDistance}px)`;
+        currentIndex = index;
+        updateImageStyles();
+        updateButtons();
+    }
+
+    //버튼 생성 함수
+    function createButton() {
+        for (let i = 0; i < maxImage; i++) {
+            let button = document.createElement("button");
+            button.style.border = "1.5px solid black";
+            button.style.backgroundColor = "transparent";
+            button.style.width = "40px";
+            button.style.height = "10px";
+            button.addEventListener("click", () => {
+                moveSlider(i);
+            });
+            btnArray.push(button);
+            button_container.appendChild(button);
+        }
+    }
+
+    //버튼 상태 업데이트 함수 (현재 선택된 버튼 색상 변경)
+    function updateButtons() {
+        for (let i = 0; i < btnArray.length; i++) {
+            //현재 버튼이면 #FF83A2 색, 아니면 투명색 부여
+            btnArray[i].style.backgroundColor = (i == currentIndex) ? "#FF83A2" : "transparent";
+        }
+    }
+
+    //줄바꿈을 처리하기 위한 함수
+    function addLineBreaks(text, maxLineLength) {
+        let result = "";
+        //maxLineLength만큼 문자열을 뽑아서 <br>태그를 더함으로 줄바꿈이 이루어짐
+        for (let i = 0; i < text.length; i += maxLineLength) {
+            result += text.substr(i, maxLineLength) + "<br>";
+        }
+        return result;
+    }
+
+    function headerScroll() {
+        let header = document.getElementById("header");
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 0) {
+                header.classList.add("scrolled");
+            } else {
+                header.classList.remove("scrolled");
+            }
+        });
+    }
+
+    function init() {
+        moveRoutes();
+        headerScroll();
+        createButton();
+        renderImages();
+        moveSlider(0);
+    }
+
+    addEventListener("load", () => {
+        init();
+    });
+</script>
