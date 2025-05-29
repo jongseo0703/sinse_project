@@ -57,6 +57,45 @@ html, body {
     color: white;
 }
 
+.animated-text {
+    position: relative;
+    font-size: 40px;
+    font-weight: bold;
+    color: white; /* 기본 흰색 텍스트 */
+}
+
+/* 글자 위에 덧씌울 분홍색 텍스트 */
+.animated-text::before {
+    content: attr(data-text);
+    position: absolute;
+    top: 0; left: 0;
+    width: 0;
+    height: 100%;
+    color: pink;
+    overflow: hidden;
+    white-space: nowrap;
+
+    animation: fillText 3s infinite;
+    animation-direction: alternate;
+    pointer-events: none; /* 마우스 이벤트 방해 안함 */
+}
+
+/* 두 글자의 폰트 스타일을 똑같이해야 겹쳐서 원하는 효과대로 나옴 */
+.animated-text, .animated-text::before {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 40px;
+    font-weight: bold;
+    line-height: 1.2;
+    letter-spacing: normal;
+    white-space: nowrap;
+}
+
+@keyframes fillText {
+    to {
+        width: 100%;
+    }
+}
+
 .container:nth-child(1) h2:nth-of-type(2) {
     font-size: 40px;
     color: white;
