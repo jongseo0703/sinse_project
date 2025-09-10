@@ -2,6 +2,12 @@
 
 일본 문화와 관광지를 가상으로 체험할 수 있는 웹사이트입니다.
 
+## 🌐 Live Demo
+
+**[🔗 Virtual Japan Tour 체험하기](https://jongseo0703.github.io/sinse_project/)**
+
+> GitHub Pages를 통해 배포된 라이브 버전을 확인하실 수 있습니다.
+
 ## 📖 프로젝트 소개
 
 Virtual Japan Tour는 일본의 다양한 지역별 정보, 문화, 여행 팁을 제공하는 인터랙티브 웹사이트입니다. 사용자는 원스크롤 페이지와 매력적인 애니메이션을 통해 일본에 대한 정보를 탐색할 수 있습니다.
@@ -83,8 +89,8 @@ shinse_project/
 
 1. 프로젝트 클론 또는 다운로드
 ```bash
-git clone [repository-url]
-cd shinse_project
+git clone https://github.com/jongseo0703/sinse_project.git
+cd sinse_project
 ```
 
 2. 로컬 서버 실행 (환율 API 사용 시)
@@ -120,6 +126,17 @@ cd shinse_project
 - CSS 트랜지션과 JavaScript로 구현된 동적 효과
 - 호버 시 섹션별 애니메이션
 - Rect.js를 활용한 도형 애니메이션
+
+## 👥 개발자
+
+- **개발자**: 박종서
+- **GitHub**: [@jongseo0703](https://github.com/jongseo0703)
+- **연락처**: Virtual Japan Tour 서울특별시 서대문구 명지전문대
+- **전화**: 00-1234-5678
+
+## 📄 라이선스
+
+Copyright © Virtual Japan Tour All Rights Reserved.
 
 ## 🔮 향후 개선 계획
 
