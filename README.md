@@ -127,17 +127,6 @@ cd sinse_project
 - 호버 시 섹션별 애니메이션
 - Rect.js를 활용한 도형 애니메이션
 
-## 👥 개발자
-
-- **개발자**: 박종서
-- **GitHub**: [@jongseo0703](https://github.com/jongseo0703)
-- **연락처**: Virtual Japan Tour 서울특별시 서대문구 명지전문대
-- **전화**: 00-1234-5678
-
-## 📄 라이선스
-
-Copyright © Virtual Japan Tour All Rights Reserved.
-
 ## 🔮 향후 개선 계획
 
 - 반응형 웹 디자인 적용
